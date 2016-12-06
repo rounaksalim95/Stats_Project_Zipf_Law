@@ -8,8 +8,14 @@ def analyze(file):
 	print "The total word count is : ", len(words)
 	# Use collections.Counter 
 	c = collections.Counter(words)
+	counter_freq = []
 	for word, count in c.most_common(5):
-		print word, (count * 1.0)/len(words)
+		first = (count * 1.0)/len(words) * 100
+		counter_freq.append(first)
+		print word, first  
+
+	first = counter_freq[0]
+	print " Zipf's law values : ", first, first/2, first/3, first/4, first/5 
 
 def main(): 
 	list_of_files = glob.glob('./*.txt')
