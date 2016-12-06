@@ -28,6 +28,7 @@ def main():
 	list_of_files = glob.glob('./*.txt')
 	list_of_frequencies = []
 	frequency_sum = [0] * NUMBER_OF_WORDS
+
 	for file in list_of_files: 
 		list_of_frequencies.append(analyze(file))
 
@@ -35,18 +36,37 @@ def main():
 		for j in range(NUMBER_OF_WORDS): 
 			frequency_sum[j] += list_of_frequencies[i][j]
 
+	# Get the average frequency 
+	average_frequency = [0] * NUMBER_OF_WORDS
 	for i in range(NUMBER_OF_WORDS):
-		frequency_sum[i] /= NUMBER_OF_BOOKS
+		average_frequency[i] = frequency_sum[i] / NUMBER_OF_BOOKS
 
 	zipf_values = [0] * NUMBER_OF_WORDS
-	first_avg_zipf = frequency_sum[0]   
+	first_avg_zipf = average_frequency[0]   
 	zipf_values[0] = first_avg_zipf
 
 	for i in range(1, NUMBER_OF_WORDS): 
 		zipf_values[i] = first_avg_zipf / (i + 1)
 
-	print "Actual values : ", frequency_sum
+	print "Actual values : ", average_frequency
 	print "Zipf values : ", zipf_values
+
+	num_std_dev = [0] * NUMBER_OF_WORDS
+
+	# Calculate the standard deviation 
+	for i in range(len(list_of_frequencies)):
+		for j in range(len(list_of_frequencies[i])):
+			num_std_dev[j] += (list_of_frequencies[i][j] - average_frequency[j]) ** 2
+
+	print "Numerator is : ", num_std_dev
+
+	std_dev = [0] * NUMBER_OF_WORDS
+	for i in range(len(num_std_dev)):
+		std_dev[i] = (num_std_dev[i] / (NUMBER_OF_BOOKS - 1)) ** 0.5
+
+	print "Standard deviation is : ", std_dev
+		
+
 
 
 
