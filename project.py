@@ -5,6 +5,7 @@ import collections
 NUMBER_OF_WORDS = 5
 NUMBER_OF_BOOKS = 41
 
+
 def analyze(file): 
 	f = open(file, 'r')
 	words = [word for line in f for word in line.split()]
@@ -21,6 +22,8 @@ def analyze(file):
 	print " Zipf's law values : ", first, first/2, first/3, first/4, first/5 
 	return counter_freq
 
+
+
 def main(): 
 	list_of_files = glob.glob('./*.txt')
 	list_of_frequencies = []
@@ -35,7 +38,16 @@ def main():
 	for i in range(NUMBER_OF_WORDS):
 		frequency_sum[i] /= NUMBER_OF_BOOKS
 
-	print frequency_sum
+	zipf_values = [0] * NUMBER_OF_WORDS
+	first_avg_zipf = frequency_sum[0]   
+	zipf_values[0] = first_avg_zipf
+
+	for i in range(1, NUMBER_OF_WORDS): 
+		zipf_values[i] = first_avg_zipf / (i + 1)
+
+	print "Actual values : ", frequency_sum
+	print "Zipf values : ", zipf_values
+
 
 
 if __name__ == "__main__":
