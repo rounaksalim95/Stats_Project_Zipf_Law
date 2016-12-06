@@ -4,6 +4,7 @@ import collections
 
 NUMBER_OF_WORDS = 5
 NUMBER_OF_BOOKS = 41
+Z_95_VALUE = 1.96
 
 
 def analyze(file): 
@@ -66,7 +67,16 @@ def main():
 
 	print "Standard deviation is : ", std_dev
 		
+	# Calculate the p values for each word
+	z = [0] * NUMBER_OF_WORDS
 
+	for i in range(NUMBER_OF_WORDS):
+		#z_numerator = (zipf_values[i] - average_frequency[i])
+		z_numerator = (average_frequency[i] - zipf_values[i])
+		z_denominator = std_dev[i] / (NUMBER_OF_BOOKS ** 0.5)
+		z[i] = z_numerator / z_denominator
+
+	print "Z values are : ", z 
 
 
 
