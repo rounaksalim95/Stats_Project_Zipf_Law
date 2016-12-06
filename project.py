@@ -1,6 +1,7 @@
 import glob 
 import itertools 
 import collections
+import matplotlib.pyplot as plt
 
 NUMBER_OF_WORDS = 5
 NUMBER_OF_BOOKS = 41
@@ -49,8 +50,10 @@ def main():
 	for i in range(1, NUMBER_OF_WORDS): 
 		zipf_values[i] = first_avg_zipf / (i + 1)
 
-	print "Actual values : ", average_frequency
-	print "Zipf values : ", zipf_values
+	print "\n==================================================================\n"
+
+	print "Actual values : ", average_frequency, '\n'
+	print "Zipf values : ", zipf_values, '\n'
 
 	num_std_dev = [0] * NUMBER_OF_WORDS
 
@@ -59,13 +62,13 @@ def main():
 		for j in range(len(list_of_frequencies[i])):
 			num_std_dev[j] += (list_of_frequencies[i][j] - average_frequency[j]) ** 2
 
-	print "Numerator is : ", num_std_dev
+	print "Numerator is : ", num_std_dev, '\n'
 
 	std_dev = [0] * NUMBER_OF_WORDS
 	for i in range(len(num_std_dev)):
 		std_dev[i] = (num_std_dev[i] / (NUMBER_OF_BOOKS - 1)) ** 0.5
 
-	print "Standard deviation is : ", std_dev
+	print "Standard deviation is : ", std_dev, '\n'
 		
 	# Calculate the p values for each word
 	z = [0] * NUMBER_OF_WORDS
@@ -76,8 +79,22 @@ def main():
 		z_denominator = std_dev[i] / (NUMBER_OF_BOOKS ** 0.5)
 		z[i] = z_numerator / z_denominator
 
-	print "Z values are : ", z 
+	print "Z values are : ", z, '\n'
 
+	zipfian_ratios = [1.0/1, 1.0/2, 1.0/3, 1.0/4, 1.0/5]
+
+	actual_ratios = [0] * NUMBER_OF_WORDS
+
+	for i in range(NUMBER_OF_WORDS):
+		actual_ratios[i] = average_frequency[i] / average_frequency[0]
+
+	print "Actual ratios are : ", actual_ratios, '\n'
+	print "Zipfian rations are : ", zipfian_ratios, '\n'
+
+
+	plt.plot([1,2,3,4,5], zipfian_ratios)
+	plt.plot([1,2,3,4,5], actual_ratios)
+	plt.show()
 
 
 if __name__ == "__main__":
