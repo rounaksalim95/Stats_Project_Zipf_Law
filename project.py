@@ -1,19 +1,21 @@
 import glob 
+import itertools 
+import collections
 
-def analyze(file):
+def analyze(file): 
 	f = open(file, 'r')
-	return collections.Counter(itertools.chain(line.split() for line in f))
-
-
+	words = [word for line in f for word in line.split()]
+	print "The total word count is : ", len(words)
+	# Use collections.Counter 
+	c = collections.Counter(words)
+	for word, count in c.most_common(5):
+		print word, (count * 1.0)/len(words)
 
 def main(): 
 	list_of_files = glob.glob('./*.txt')
 	list_of_frequencies = []
 	for file in list_of_files: 
 		list_of_frequencies.append(analyze(file))
-
-	for freq in list_of_frequencies: 
-		print max(freq, key = freq.get)
 
 
 
