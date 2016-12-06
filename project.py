@@ -62,7 +62,6 @@ def main():
 		for j in range(len(list_of_frequencies[i])):
 			num_std_dev[j] += (list_of_frequencies[i][j] - average_frequency[j]) ** 2
 
-	print "Numerator is : ", num_std_dev, '\n'
 
 	std_dev = [0] * NUMBER_OF_WORDS
 	for i in range(len(num_std_dev)):
